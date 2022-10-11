@@ -1,12 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 class App extends React.Component {
-  render() {
+  constructor(props) {
+    super(props);
+    // only time we do direct assingment
+    this.state = { lat: null };
     window.navigator.geolocation.getCurrentPosition(
-      (position) => console.log(position),
+      (position) => {
+        // call setState dont do it directly
+        this.setState({ lat: position.coords.latitude });
+      },
       (err) => console.log(err)
     );
-    return <div>Latitude: </div>;
+  }
+  render() {
+    return <div>Latitude: {this.state.lat}</div>;
   }
 }
 const root = ReactDOM.createRoot(document.getElementById("root"));
